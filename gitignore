@@ -1,0 +1,62 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.log
+
+# Django
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+*.pot
+*.pyc
+
+# Virtual Environment
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Environment Variables
+.env
+.env.*
+
+# Migrations
+*/migrations/*.py
+*/migrations/*.pyc
+
+# Coverage
+htmlcov/
+.coverage
+.tox/
+
+# pytest
+.pytest_cache/
+
+# Node
+node_modules/
+
+# Other
+*.bak
+*.swp
+*.tmp
