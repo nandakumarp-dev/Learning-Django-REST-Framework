@@ -12,5 +12,5 @@ class BooksSerializer(serializers.ModelSerializer):
 
         # exclude = ['active_status','uuid']
 
-        read_only_fields = ['active_staus','uuid']
+        read_only_fields = ['active_status','uuid']
 

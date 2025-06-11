@@ -1,12 +1,11 @@
 from django.db import models
-
 import uuid
 
-# Create your models here.
+# Base abstract model
 
 class BaseClass(models.Model):
 
-    uuid = models.SlugField(unique=True,default=uuid.uuid4)
+    uuid = models.SlugField(unique=True, default=uuid.uuid4)
 
     active_status = models.BooleanField(default=True)
 
@@ -18,49 +17,50 @@ class BaseClass(models.Model):
 
         abstract = True
 
-class EditionChoices(models.IntegerChoices):
-
-    ONE = 1 , '1'
-    TWO = 2 , '2'
-    THREE = 3 , '3'
-    FOUR = 4 , '4'
-    FIVE = 5 , '5'
+# Genre choices
 
 class GenreChoices(models.TextChoices):
-    
-    FICTION = 'Fiction', 'Fiction'
-    NON_FICTION = 'Non-Fiction', 'Non-Fiction'
-    SCIENCE = 'Science', 'Science'
-    HISTORY = 'History', 'History'
-    FANTASY = 'Fantasy', 'Fantasy'
-    MYSTERY = 'Mystery', 'Mystery'
-    BIOGRAPHY = 'Biography', 'Biography'
-    ROMANCE = 'Romance', 'Romance'
 
-class Books(BaseClass):
+    POP = 'Pop', 'Pop'
+    ROCK = 'Rock', 'Rock'
+    CLASSICAL = 'Classical', 'Classical'
+    HIP_HOP = 'Hip-Hop', 'Hip-Hop'
+    JAZZ = 'Jazz', 'Jazz'
+    FOLK = 'Folk', 'Folk'
+    COUNTRY = 'Country', 'Country'
+    EDM = 'EDM', 'Electronic Dance Music'
+    OTHER = 'Other', 'Other'
 
-    title = models.CharField(max_length=50)
+# Gender choices
 
-    published_year = models.CharField(max_length=4)
+class GenderChoices(models.TextChoices):
 
-    edition = models.IntegerField(max_length=20, choices=EditionChoices.choices)
+    MALE = 'Male', 'Male'
+    FEMALE = 'Female', 'Female'
+    OTHER = 'Other', 'Other'
 
-    genre = models.CharField(max_length=30, choices=GenreChoices.choices)
+# Singer model
 
-    price = models.FloatField()
+class Singers(BaseClass):
 
-    offer_price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    name = models.CharField(max_length=50)
 
-    author = models.CharField(max_length=25)
+    date_of_birth = models.DateField(blank=True, null=True)
 
+    gender = models.CharField(max_length=15, choices=GenderChoices.choices, blank=True)
+
+    number_of_songs = models.PositiveIntegerField(default=0)
+
+    nationality = models.CharField(max_length=100, blank=True)
+
+    genre = models.CharField(max_length=50, choices=GenreChoices.choices, default=GenreChoices.OTHER)
 
     class Meta:
 
-        verbose_name = 'Books'
+        verbose_name = 'Singer'
 
-        verbose_name_plural = 'Books'
+        verbose_name_plural = 'Singers'
 
     def __str__(self):
 
-        return f'{self.title}-{self.author}'
-
+        return f'{self.name} - {self.genre} - {self.nationality}'

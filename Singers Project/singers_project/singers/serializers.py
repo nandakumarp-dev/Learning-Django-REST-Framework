@@ -1,16 +1,16 @@
 from rest_framework import serializers
 
-from .models import Books
+from .models import Singers
 
-class BooksSerializer(serializers.ModelSerializer):
+class SingersSerializer(serializers.ModelSerializer):
 
     class Meta:
 
-        model = Books
+        model = Singers
 
         fields = '__all__'
 
         # exclude = ['active_status','uuid']
 
-        read_only_fields = ['active_staus','uuid']
+        read_only_fields = ['active_status','uuid']
 
