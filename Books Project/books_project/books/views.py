@@ -20,9 +20,7 @@ class BookListCreateView(APIView):
 
         book_serializer = self.serializer_class(books,many=True)
 
-        data = {'books' : book_serializer.data}
-
-        return Response(data=data,status=200)
+        return Response(data=book_serializer.data,status=200)
     
     
     def post(self,request,*args,**kwargs):
@@ -40,30 +38,44 @@ class BookListCreateView(APIView):
 
 class BooksRetrieveUpdateDestroyView(APIView):
 
+    serializer_class = BooksSerializer
+
     def get(self,request,*args,**kwargs):
 
         uuid = kwargs.get('uuid')
 
-        data = {'uuid':uuid,'msg':'this is retrieve view'}
+        book = Books.objects.get(uuid=uuid)
 
-        return Response(data=data,status=200)
+        book_serializer = self.serializer_class(book)
+
+        return Response(data=book_serializer.data,status=200)
     
 
     def put(self,request,*args,**kwargs):
 
         uuid = kwargs.get('uuid')
 
-        data = {'uuid':uuid,'msg':'this is Update view'}
+        book = Books.objects.get(uuid=uuid)
 
-        return Response(data=data,status=200)
+        book_serializer = self.serializer_class(instance=book,data=request.data,partial=True)
+
+        if book_serializer.is_valid():
+
+            book_serializer.save()
+            
+            return Response(data={'msg':'book updated successfully'},status=200)
+        
+        return Response(data=book_serializer.errors,status=400)
     
 
     def delete(self, request, *args, **kwargs):
 
         uuid = kwargs.get('uuid')
 
-        data = {'uuid':uuid,'msg':'this is Delete view'}
+        book = Books.objects.get(uuid=uuid)
 
-        return Response(data=data, status=200)
+        book.delete()
+
+        return Response(data={'msg':'this is Delete view'}, status=204)
 
     
